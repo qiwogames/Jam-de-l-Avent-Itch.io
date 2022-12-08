@@ -10,10 +10,12 @@ public class HurtPlayerOnContact : MonoBehaviour
     private PlayerMoves player;
     private PlayerSwim playerSwim;
 
+
     void Start()
     {
         player = FindObjectOfType<PlayerMoves>();  
         playerSwim = FindObjectOfType<PlayerSwim>();
+        
 
         cameraScript = FindObjectOfType<Camera2D>().GetComponent<Camera2D>();
         healthScript = FindObjectOfType<HealthManager>();

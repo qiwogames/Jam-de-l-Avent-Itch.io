@@ -17,4 +17,9 @@ public class TriggerScene : MonoBehaviour
             SceneManager.LoadScene(sceneNameToLoad);
         }
     }
+
+    public void TriggerNextScene()
+    {
+        SceneManager.LoadScene(sceneNameToLoad);
+    }
 }

@@ -1,10 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerProjectiles : MonoBehaviour
+public class PlayerProjectilesFly : MonoBehaviour
 {
-    private PlayerMoves playerScript;
+   
     public float projectileSpeed;
 
     private Rigidbody2D rb2d;
@@ -17,16 +17,6 @@ public class PlayerProjectiles : MonoBehaviour
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
-
-        playerScript = FindObjectOfType<PlayerMoves>();
-      
-
-        if(!playerScript.isFacingRight){
-            projectileSpeed = -projectileSpeed;
-            isFromRight = false;
-        }
-       
-
     }
 
     // Update is called once per frame
@@ -40,16 +30,12 @@ public class PlayerProjectiles : MonoBehaviour
     //Detruire le projectile a la collision
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.gameObject.CompareTag("Wall") || 
-            other.gameObject.CompareTag("Pomme") ||
-            other.gameObject.CompareTag("Pizza") ||
-            other.gameObject.CompareTag("Carotte")
-            ){
+        if (other.gameObject.CompareTag("Wall"))
+        {
             Destroy(gameObject);
             Instantiate(projectileParticles, transform.position, transform.rotation);
             //Debug.Log("Erreur");
-        }    
+        }
     }
 
-    
 }

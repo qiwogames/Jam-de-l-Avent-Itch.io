@@ -13,7 +13,7 @@ public class PlayerMoves : MonoBehaviour
 
     //jump
     public LayerMask whatIsGround;
-    private float groundRadius = 0.2f;
+    private float groundRadius = 0.1f;
     public Transform groundCheck;
     public float jumpForce;
     public bool isGrounded;
