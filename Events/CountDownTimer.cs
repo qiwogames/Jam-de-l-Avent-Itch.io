@@ -51,7 +51,7 @@ public class CountDownTimer : MonoBehaviour
 
     void StopGame()
     {
-        Time.timeScale = 0;
+        
         panneauLaSuite.gameObject.SetActive(true);
     }
 }

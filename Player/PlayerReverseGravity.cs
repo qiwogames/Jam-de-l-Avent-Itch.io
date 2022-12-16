@@ -1,9 +1,10 @@
-﻿using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerMoves : MonoBehaviour
+public class PlayerReverseGravity : MonoBehaviour
 {
+
     // moves
     public float moveSpeed;
     private Rigidbody2D rbr2d;
@@ -11,23 +12,14 @@ public class PlayerMoves : MonoBehaviour
     private Animator animator;
     public bool isFacingRight = true;
 
-    public bool isReverse = false;
-
     //jump
     public LayerMask whatIsGround;
     private float groundRadius = 0.1f;
     public Transform groundCheck;
-    public float jumpForce;
+    public float jumpForce = -10f;
     public bool isGrounded;
     public bool airControl = false;
 
-
-
-    //knockBack
-    public float knockBack = 3f; // force x et  y  = 3
-    public float knockBackCount = 0f;// = 0
-    public float knockbackLenght = 0.25f;// temps 0.25s
-    public bool knockFromRight;
 
 
     //Sounds
@@ -47,8 +39,8 @@ public class PlayerMoves : MonoBehaviour
     void Start()
     {
         rbr2d = GetComponent<Rigidbody2D>();
+        rbr2d.gravityScale = -3f;
         animator = GetComponent<Animator>();
-        rbr2d.gravityScale = 3f;
     }
 
     void FixedUpdate()
@@ -74,7 +66,6 @@ public class PlayerMoves : MonoBehaviour
 
     void Update()
     {
-
         //Le saut
         if (Input.GetButtonDown("Jump") && isGrounded)
         {
@@ -85,7 +76,7 @@ public class PlayerMoves : MonoBehaviour
         //Attack
         if (Input.GetButtonDown("Fire1"))
         {
-            if(Time.time > fireRate + lastShot)
+            if (Time.time > fireRate + lastShot)
             {
                 animator.SetBool("Attack", true);
                 Invoke("StopAttackAnim", 0.2f);
@@ -96,28 +87,8 @@ public class PlayerMoves : MonoBehaviour
                 }
                 lastShot = Time.time;
             }
-           
-
-        }
 
 
-
-        //knockback droite et gauche
-        if (knockBackCount <= 0)
-        {
-            rbr2d.velocity = new Vector2(rbr2d.velocity.x, rbr2d.velocity.y);
-        }
-        else
-        {
-            if (knockFromRight)
-            {
-                rbr2d.velocity = new Vector2(-knockBack, knockBack);
-            }
-            if (!knockFromRight)
-            {
-                rbr2d.velocity = new Vector2(knockBack, knockBack);
-            }
-            knockBackCount -= Time.deltaTime;
         }
 
 
@@ -150,17 +121,16 @@ public class PlayerMoves : MonoBehaviour
         }
     }
 
-  
     void FlipSprites()
     {
         if (isFacingRight)
         {
-            transform.localScale = new Vector3(1f, 1f, 1f);
+            transform.localScale = new Vector3(1f, -1f, 1f);
         }
 
         if (!isFacingRight)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            transform.localScale = new Vector3(-1f, -1f, 1f);
         }
     }
 
@@ -169,7 +139,6 @@ public class PlayerMoves : MonoBehaviour
         animator.SetBool("Attack", false);
     }
 
-  
 
     //*****************************************************TRIGGER*********************************************************//
     //trigger ENTER : 
@@ -179,13 +148,13 @@ public class PlayerMoves : MonoBehaviour
         {
             this.transform.parent = cible.transform;
         }
-       
+
         //Dans l'eau
-        if(cible.tag == "Water")
+        if (cible.tag == "Water")
         {
             animator.SetBool("Swim", true);
             moveSpeed = 3f;
-        }      
+        }
     }
 
     //Trigger STAY : colle au plateforme qui bouge
@@ -194,7 +163,7 @@ public class PlayerMoves : MonoBehaviour
         if (cible.tag == "PlateForme")
         {
             this.transform.parent = cible.transform;
-        }    
+        }
     }
     //Trigger EXIT : decolle au plateforme qui bouge
     void OnTriggerExit2D(Collider2D cible)

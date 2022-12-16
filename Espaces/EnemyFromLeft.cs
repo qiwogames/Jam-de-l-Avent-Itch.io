@@ -17,18 +17,19 @@ public class EnemyFromLeft : MonoBehaviour
     {
         Vector3 pos = transform.position;
 
-        pos.z = -2f;
+        pos.z = -9f;
         pos.x -= moveSpeed * Time.fixedDeltaTime;
 
         transform.position = pos;
-        Destroy(gameObject, 10f);
+        //Destroy(gameObject, 10f);
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.CompareTag("Wall"))
+        if (collision.gameObject.CompareTag("DestroyEnemies"))
         {
-            Debug.Log("test");
+            //Debug.Log("test");
+            Destroy(gameObject);
             
         }
     }

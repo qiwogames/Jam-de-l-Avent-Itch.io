@@ -15,12 +15,12 @@ public class InfiniteScrollBG : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += new Vector3(xPos * Time.deltaTime, transform.position.y);
-
+        transform.position += new Vector3(xPos * Time.deltaTime, transform.position.y,0f);
+       
         //Si on atteint la limite en X
         if(transform.position.x < -xLimit)
         {
-            transform.position = new Vector3(xLimit, transform.position.y);
+            transform.position = new Vector3(xLimit, transform.position.y,0f);
         }
 
     }

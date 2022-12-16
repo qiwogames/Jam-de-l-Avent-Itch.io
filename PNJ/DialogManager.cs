@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class DialogManager : MonoBehaviour
 {
@@ -9,11 +10,8 @@ public class DialogManager : MonoBehaviour
     public Text nomText;
     public Text dialogueText;
     //Les elements a manipuler a la fin du dialogue
-    public BoxCollider2D triggerBc2D;
-    public Animator oldManAnimator;
-    public GameObject exitDoor;
-    public GameObject doorParticles;
-    public AudioClip doorSound;
+    
+   
     public Animator anim;
 
     // Queue utilise une tableau de string FIFO (First In First Out)
@@ -21,9 +19,7 @@ public class DialogManager : MonoBehaviour
 
     void Start()
     {
-        sentences = new Queue<string>();
-        exitDoor.gameObject.SetActive(false);
-       
+        sentences = new Queue<string>();        
     }
 
     public void StartDialogue(Dialog dialogue)
@@ -74,15 +70,14 @@ public class DialogManager : MonoBehaviour
     {
         //Debug.Log("Fin du dialogue");
         anim.SetBool("isOpen", false);
-        triggerBc2D.enabled = false;
-        oldManAnimator.SetBool("isHappy", true);
-        //SON
-        if (doorSound)
-        {
-            AudioSource.PlayClipAtPoint(doorSound, transform.position);
-        }
-        Instantiate(doorParticles, transform.position, transform.rotation);
-        exitDoor.gameObject.SetActive(true);
-        Time.timeScale = 1;
+        SceneManager.LoadScene("Accueil");
     }
+
+    void BackToMenu()
+    {
+        Debug.Log("Ok trigger scene");
+        SceneManager.LoadScene("Accueil");
+    }
+
+
 }

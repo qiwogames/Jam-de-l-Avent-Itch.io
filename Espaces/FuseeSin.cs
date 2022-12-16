@@ -34,6 +34,7 @@ public class FuseeSin : MonoBehaviour
             sin *= -1;
         }
         pos.y = sinCenterY + sin;
+        
 
         transform.position = pos;
     }
